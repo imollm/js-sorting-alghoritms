@@ -186,10 +186,34 @@ class MaxHeap {
     }
 }
 
+/**
+ * HEAP SORT
+ * Complexity
+ * Best: O(n * log n)
+ * Worst: O(n * log n)
+ * Average: O(n * log n)
+ * 
+ * @param {Array} items 
+ * @returns {Array} sorted items
+ */
+const heapSort = (items) => {
+    let sorted = [];
+    let heap1 = new MaxHeap();
+
+    for(let i = 0; i < items.length; i++){
+        heap1.insert(items[i]);
+    }
+
+    for(let i = 0; i < items.length; i++){
+        sorted.push(heap1.delete());
+    }
+    return sorted.reverse();
+}
+
 const itemsToBeSorted = [3, 7, 1, 9, 4, 2];
 const size = itemsToBeSorted.length - 1;
 
 console.log(`QuickSort - ${quickSort(itemsToBeSorted, 0, size)}`);
 console.log(`BubbleSort - ${bubbleSort(itemsToBeSorted, size)}`);
 console.log(`MergeSort - ${mergeSort(itemsToBeSorted)}`);
-   
+console.log(`HeapSort - ${heapSort(itemsToBeSorted)}`);
