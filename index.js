@@ -76,8 +76,120 @@ const bubbleSort = (items) => {
     return items;
 }
 
+/**
+ * MERGE SORT
+ * Complexity
+ * Best: O(n * log n)
+ * Worst: O(n * log n)
+ * Average: O(n * log n)
+ * 
+ * @param {Array} items 
+ * @returns {Array} sorted items
+ */
+const mergeSort = (items) => {
+    if (items.length > 1) {
+        const r = Math.floor(items.length / 2);
+        let L = [];
+        let M = [];
+        items.forEach((item, index) => {
+            if (index <= r) {
+                L.push(item);
+            }
+            if (index > r) {
+                M.push(item);
+            }
+        })
+
+        let i, j, k = 0;
+
+        while (i < L.length && j < M.length) {
+            if (L[i] < M[j]) {
+                items[k] = L[i]
+                i += 1
+            } else {
+                items[k] = M[j]
+                j += 1
+            }
+            k += 1
+        }
+
+        while (i < L.length) {
+            items[k] = L[i]
+            i += 1
+            k += 1
+        }
+
+        while (j < M.length) {
+            items[k] = M[j]
+            j += 1
+            k += 1
+        }
+    }
+
+    return items;
+}
+
+class MaxHeap {
+    constructor() {
+        this.heap = [];
+    }
+
+    parentIndex(index) {
+        return Math.floor((index - 1) / 2);
+    }
+
+    leftChildIndex(index) {
+        return (2 * index + 1);
+    }
+
+    rightChildIndex(index) {
+        return (2 * index + 2);
+    }
+
+    swap(a, b) {
+        let temp = this.heap[a];
+        this.heap[a] = this.heap[b];
+        this.heap[b] = temp;
+    }
+
+    insert(item) {
+        this.heap.push(item);
+        let index = this.heap.length - 1;
+        let parent = this.parentIndex(index);
+        while (this.heap[parent] && this.heap[parent] < this.heap[index]) {
+            this.swap(parent, index);
+            index = this.parentIndex(index);
+            parent = this.parentIndex(index);
+        }
+    }
+
+    delete() {
+        let item = this.heap.shift();
+        this.heap.unshift(this.heap.pop());
+        let index = 0;
+        let leftChild = this.leftChildIndex(index);
+        let rightChild = this.rightChildIndex(index);
+
+        while(this.heap[leftChild] && this.heap[leftChild] > this.heap[index] || this.heap[rightChild] > this.heap[index]){
+            let max = leftChild;
+
+            if(this.heap[rightChild] && this.heap[rightChild] > this.heap[max]){
+                max = rightChild
+            }
+
+            this.swap(max, index);
+            index = max;
+            leftChild = this.leftChildIndex(max);
+            rightChild = this.rightChildIndex(max);
+        }
+        return item;
+    }
+}
+
 const itemsToBeSorted = [3, 7, 1, 9, 4, 2];
 const size = itemsToBeSorted.length - 1;
 
 console.log(`QuickSort - ${quickSort(itemsToBeSorted, 0, size)}`);
 console.log(`BubbleSort - ${bubbleSort(itemsToBeSorted, size)}`);
+console.log(`MergeSort - ${mergeSort(itemsToBeSorted)}`);
+   
