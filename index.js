@@ -52,7 +52,32 @@
     return items;
 }
 
+/**
+ * BUBBLE SORT
+ * Complexity
+ * Best: O(n)
+ * Worst: O(n^2)
+ * Average: O(n^2)
+ * 
+ * @param {Array} items 
+ * @returns {Array} sorted items
+ */
+const bubbleSort = (items) => {
+    for (let i = 0; i <= items.length; i++) {
+        for (let j = 0; j <= items.length - i; j++) {
+            if (items[j] > items[j + 1]) {
+                const temp = items[j];
+                items[j] = items[j + 1];
+                items[j + 1] = temp
+            }
+        }
+    }
+
+    return items;
+}
+
 const itemsToBeSorted = [3, 7, 1, 9, 4, 2];
 const size = itemsToBeSorted.length - 1;
 
 console.log(`QuickSort - ${quickSort(itemsToBeSorted, 0, size)}`);
+console.log(`BubbleSort - ${bubbleSort(itemsToBeSorted, size)}`);
